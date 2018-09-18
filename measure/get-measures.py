@@ -2,6 +2,9 @@ import boto3
 import re
 import argparse
 
+from tabulate import tabulate
+from scipy import stats
+
 
 # Read args
 parser = argparse.ArgumentParser(description='Reads CloudWatch Logs and parses execution durations and more.')
@@ -69,7 +72,60 @@ for evnt in events:
 		])
 
 
+# Load additional function information
+print("Loading function info...")
+lambda_client = boto3.client("lambda")
+finfo = lambda_client.get_function(FunctionName="zappa-django-dev")
+functionInfo["codeSize"] = finfo["Configuration"]["CodeSize"]/1024/1024
+#functionInfo["codeSize"] = finfo["Configuration"]["MemorySize"]
+functionInfo["inVpc"] = "VpcConfig" in finfo["Configuration"]
+
 print ("All Done")
-print (functionInfo)
-print (data_collected_headers)
-print (data_collected)
+
+# RAW DATA:
+#print (functionInfo)
+#print (data_collected_headers)
+#print (data_collected)
+
+# SUMMARY DATA:
+data_collected_warm = [x for x in data_collected if x[0] <= 100]
+data_collected_cold = [x for x in data_collected if x[0] > 100]
+
+
+summary_headers = ["Function", "Size(MB)", "VPC", "D.Mean", "Var", "Billed Mean", "Var", "Mem Mean", "Var"]
+
+def output_stats(data):
+	data_stats = stats.describe(data)
+	data_row = [
+				functionName, 
+				"%.02f" % functionInfo["codeSize"],
+				"Yes" if functionInfo["inVpc"] else "No"
+				]
+
+	# duration mean and variance
+	data_row.append(data_stats.mean[0])
+	data_row.append(data_stats.variance[0])
+
+	# billed duration mean and variance
+	data_row.append(data_stats.mean[1])
+	data_row.append(data_stats.variance[1])
+
+	# mem used mean and variance
+	data_row.append(data_stats.mean[2])
+	data_row.append(data_stats.variance[2])
+
+	print(tabulate([data_row], tablefmt="pipe", headers=summary_headers))
+
+
+print("COLD START RESULS")
+print("-----------------")
+output_stats(data_collected_cold)
+
+print("WARM START RESULS")
+print("-----------------")
+output_stats(data_collected_warm)
+
+
+#https://pypi.org/project/tabulate/
+#print(tabulate(df, tablefmt="markdown", headers="keys"))
+#https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables

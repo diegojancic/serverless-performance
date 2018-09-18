@@ -5,5 +5,7 @@ jmespath==0.9.3
 numpy==1.15.1
 python-dateutil==2.7.3
 s3transfer==0.1.13
+scipy==1.1.0
 six==1.11.0
+tabulate==0.8.2
 urllib3==1.23
