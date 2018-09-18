@@ -33,7 +33,7 @@ logGroup = logGroups[0]
 
 # Read the logs
 print ("Loading events...")
-logs = cwl.filter_log_events(logGroupName = '/aws/lambda/zappa-django-dev', 
+logs = cwl.filter_log_events(logGroupName = f'/aws/lambda/{functionName}', 
 	filterPattern='"Duration: "', 
 	interleaved=True)
 
@@ -75,7 +75,7 @@ for evnt in events:
 # Load additional function information
 print("Loading function info...")
 lambda_client = boto3.client("lambda")
-finfo = lambda_client.get_function(FunctionName="zappa-django-dev")
+finfo = lambda_client.get_function(FunctionName=functionName)
 functionInfo["codeSize"] = finfo["Configuration"]["CodeSize"]/1024/1024
 #functionInfo["codeSize"] = finfo["Configuration"]["MemorySize"]
 functionInfo["inVpc"] = "VpcConfig" in finfo["Configuration"]
