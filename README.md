@@ -34,8 +34,8 @@ NOTE: Results are not yet statistically accurate. Not enough samples taken (chec
 
 | Function         |   Size(MB) | VPC   |   D.Mean |     Var |   Billed Mean |     Var |   Mem Mean |   Var |
 |:-----------------|-----------:|:------|---------:|--------:|--------------:|--------:|-----------:|------:|
-| zappa-django |      14.11 | No    |  2605.81 | 12123.7 |       2666.67 | 13333.3 |         61 |     0 |
-| zappa-flask |       5.59 | No    |    711.7 |   nan |           800 |   nan |         48 |   nan |
+| zappa-django |      14.11 | No    |  2650.19 | 7451.17 |          2700 |  8000 |    60.1667 | 4.16667 |
+| zappa-flask |       5.59 | No    |  753.144 | 2552.08 |           820 |  2000 |         47 |     5 |
 
 
 
@@ -43,8 +43,9 @@ NOTE: Results are not yet statistically accurate. Not enough samples taken (chec
 
 | Function         |   Size(MB) | VPC   |   D.Mean |     Var |   Billed Mean |   Var |   Mem Mean |     Var |
 |:-----------------|-----------:|:------|---------:|--------:|--------------:|------:|-----------:|--------:|
-| zappa-django |      14.11 | No    |  1.76097 | 2.65008 |           100 |     0 |    58.4839 | 9.05806 |
-| zappa-flask |       5.59 | No    |     2.22 | 7.55382 |           100 |     0 |         48 |     0 |
+| zappa-django |      14.11 | No    |   4.1844 | 21.8542 |           100 |     0 |    59.6978 | 6.85292 |
+| zappa-flask |       5.59 | No    |  4.65865 | 26.103 |           100 |     0 |    47.6474 | 1.64909 |
+
 
 
 # License
