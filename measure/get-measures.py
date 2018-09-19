@@ -31,45 +31,59 @@ if len(logGroups) == 0:
 logGroup = logGroups[0]
 
 
-# Read the logs
-print ("Loading events...")
-logs = cwl.filter_log_events(logGroupName = f'/aws/lambda/{functionName}', 
-	filterPattern='"Duration: "', 
-	interleaved=True)
-
-events = logs["events"]
-print (f"{len(events)} invocations found...")
-
-# Parse logs
-pattern = re.compile(r"Duration: (?P<duration>\d+(\.\d+)?) ms.+Billed Duration: (?P<billed>\d+(\.\d+)?) ms.+Memory Size: (?P<memsize>\d+).+Max Memory Used: (?P<memused>\d+)", 
-			re.IGNORECASE | re.MULTILINE | re.DOTALL)
 
 functionInfo = {
 	"name": functionName,
 	"memorySize": 0
 }
-data_collected_headers = ["duration", "billed", "memused"]
+data_collected_headers = ["duration", "billed", "memused", "coldStart"]
 data_collected = []
 
-first_event = True
-for evnt in events:
-	message = evnt["message"]
 
-	results = pattern.search(message)
-	if not results:
-		print ("Warn: the following message didn't match the pattern: " + message)
-		continue;
-	results.group("duration")
+# Read log streams
+logStreams = cwl.describe_log_streams(logGroupName=f'/aws/lambda/{functionName}')
+for logStream in logStreams["logStreams"]:
+	
+	logStreamName = logStream["logStreamName"]
 
-	if first_event:
-		first_event = False
-		functionInfo["memorySize"] = int(results.group("memsize"))
+	# Read the logs
+	print ("Loading events...")
+	logs = cwl.filter_log_events(logGroupName = f'/aws/lambda/{functionName}', 
+		filterPattern='"Duration: "', 
+		logStreamNames=[logStreamName])
 
-	data_collected.append([
-			float(results.group("duration")),
-			int(results.group("billed")),
-			int(results.group("memused")),
-		])
+	#import pdb;pdb.set_trace()
+
+	events = logs["events"]
+	print (f"{len(events)} invocations found...")
+
+	# Parse logs
+	pattern = re.compile(r"Duration: (?P<duration>\d+(\.\d+)?) ms.+Billed Duration: (?P<billed>\d+(\.\d+)?) ms.+Memory Size: (?P<memsize>\d+).+Max Memory Used: (?P<memused>\d+)", 
+				re.IGNORECASE | re.MULTILINE | re.DOTALL)
+
+
+	first_event = True
+	for evnt in events:
+		message = evnt["message"]
+
+		results = pattern.search(message)
+		if not results:
+			print ("Warn: the following message didn't match the pattern: " + message)
+			continue;
+		results.group("duration")
+
+		coldStart = False
+		if first_event:
+			first_event = False
+			coldStart = True
+			functionInfo["memorySize"] = int(results.group("memsize"))
+
+		data_collected.append([
+				float(results.group("duration")),
+				int(results.group("billed")),
+				int(results.group("memused")),
+				coldStart
+			])
 
 
 # Load additional function information
@@ -88,11 +102,11 @@ print ("All Done")
 #print (data_collected)
 
 # SUMMARY DATA:
-data_collected_warm = [x for x in data_collected if x[0] <= 100]
-data_collected_cold = [x for x in data_collected if x[0] > 100]
+data_collected_warm = [x for x in data_collected if x[3] == False]
+data_collected_cold = [x for x in data_collected if x[3] == True]
 
 
-summary_headers = ["Function", "Size(MB)", "VPC", "D.Mean", "Var", "Billed Mean", "Var", "Mem Mean", "Var"]
+summary_headers = ["Function", "Size(MB)", "VPC", "D.Mean", "Var", "Billed Mean", "Var", "Mem Mean", "Var", "Samples"]
 
 def output_stats(data):
 	data_stats = stats.describe(data)
@@ -113,6 +127,9 @@ def output_stats(data):
 	# mem used mean and variance
 	data_row.append(data_stats.mean[2])
 	data_row.append(data_stats.variance[2])
+
+	# Samples
+	data_row.append(data_stats.nobs)
 
 	print(tabulate([data_row], tablefmt="pipe", headers=summary_headers))
 

@@ -4,7 +4,7 @@ import time
 import boto3
 
 
-ping_count = 1000
+ping_count = 400
 ping_delay_mins = 5
 
 # Read args

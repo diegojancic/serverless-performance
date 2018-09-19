@@ -32,19 +32,22 @@ NOTE: Results are not yet statistically accurate. Not enough samples taken (chec
 ### Cold-start statistics
 
 
-| Function         |   Size(MB) | VPC   |   D.Mean |     Var |   Billed Mean |     Var |   Mem Mean |   Var |
-|:-----------------|-----------:|:------|---------:|--------:|--------------:|--------:|-----------:|------:|
-| zappa-django |      14.11 | No    |  2650.19 | 7451.17 |          2700 |  8000 |    60.1667 | 4.16667 |
-| zappa-flask |       5.59 | No    |  753.144 | 2552.08 |           820 |  2000 |         47 |     5 |
+| Function         |   Size(MB) | VPC   |   D.Mean |         Var |   Billed Mean |    Var |   Mem Mean |     Var |   Samples |
+|:-----------------|-----------:|:------|---------:|------------:|--------------:|-------:|-----------:|--------:|----------:|
+| zappa-django |      14.11 | No    |  2271.87 | 1.00807e+06 |       2328.57 | 972381 |    59.4286 | 7.28571 |         7 |
+| zappa-flask |       5.59 | No    |  753.144 | 2552.08 |           820 |  2000 |         47 |     5 |         5 |
+| chalice |       0.01 | Yes   |     0.62 |   nan |           100 |   nan |         22 |   nan |         1 |
+
 
 
 
 ### Warm-start statistics
 
-| Function         |   Size(MB) | VPC   |   D.Mean |     Var |   Billed Mean |   Var |   Mem Mean |     Var |
-|:-----------------|-----------:|:------|---------:|--------:|--------------:|------:|-----------:|--------:|
-| zappa-django |      14.11 | No    |   4.1844 | 21.8542 |           100 |     0 |    59.6978 | 6.85292 |
-| zappa-flask |       5.59 | No    |  4.65865 | 26.103 |           100 |     0 |    47.6474 | 1.64909 |
+| Function         |   Size(MB) | VPC   |   D.Mean |     Var |   Billed Mean |   Var |   Mem Mean |     Var |   Samples |
+|:-----------------|-----------:|:------|---------:|--------:|--------------:|------:|-----------:|--------:|----------:|
+| zappa-django |      14.11 | No    |  4.19663 | 21.9482 |           100 |     0 |    59.7238 | 6.76771 |       181 |
+| zappa-flask |       5.59 | No    |  4.65865 | 26.103 |           100 |     0 |    47.6474 | 1.64909 |       156 |
+| chalice |       0.01 | Yes   |  2.21538 | 17.5225 |           100 |     0 |         22 |     0 |        13 |
 
 
 
