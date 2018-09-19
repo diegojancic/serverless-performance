@@ -14,9 +14,29 @@ args = parser.parse_args()
 
 functionName = args.function
 
+
+functionInfo = {
+	"name": functionName,
+	"memorySize": 0
+}
+data_collected_headers = ["duration", "billed", "memused", "coldStart"]
+data_collected = []
+
+
 print (f"LOADING INFO FOR FUNCTION '{functionName}'")
 print ("-------------------------")
 
+# Load additional function information
+print("Loading function info...")
+lambda_client = boto3.client("lambda")
+finfo = lambda_client.get_function(FunctionName=functionName)
+functionInfo["codeSize"] = finfo["Configuration"]["CodeSize"]/1024/1024
+#functionInfo["codeSize"] = finfo["Configuration"]["MemorySize"]
+functionInfo["inVpc"] = (("VpcConfig" in finfo["Configuration"]) 
+						and finfo["Configuration"]["VpcConfig"]["VpcId"])
+
+
+# Load logs
 cwl = boto3.client('logs')
 
 # Load groups
@@ -32,12 +52,6 @@ logGroup = logGroups[0]
 
 
 
-functionInfo = {
-	"name": functionName,
-	"memorySize": 0
-}
-data_collected_headers = ["duration", "billed", "memused", "coldStart"]
-data_collected = []
 
 
 # Read log streams
@@ -86,18 +100,10 @@ for logStream in logStreams["logStreams"]:
 			])
 
 
-# Load additional function information
-print("Loading function info...")
-lambda_client = boto3.client("lambda")
-finfo = lambda_client.get_function(FunctionName=functionName)
-functionInfo["codeSize"] = finfo["Configuration"]["CodeSize"]/1024/1024
-#functionInfo["codeSize"] = finfo["Configuration"]["MemorySize"]
-functionInfo["inVpc"] = "VpcConfig" in finfo["Configuration"]
-
 print ("All Done")
 
 # RAW DATA:
-#print (functionInfo)
+print (functionInfo)
 #print (data_collected_headers)
 #print (data_collected)
 
