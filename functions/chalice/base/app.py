@@ -1,6 +1,6 @@
 from chalice import Chalice, Response
 
-app = Chalice(app_name='website')
+app = Chalice(app_name='chalice-base')
 
 
 @app.route('/')
