@@ -5,5 +5,7 @@
     "dev": {
       "api_gateway_stage": "api"
     }
-  }
+  },
+  "lambda_timeout": 30,
+  "lambda_memory_size": 512
 }
