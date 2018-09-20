@@ -1,0 +1,11 @@
+{
+  "version": "2.0",
+  "app_name": "website",
+  "stages": {
+    "dev": {
+      "api_gateway_stage": "api"
+    }
+  },
+  "lambda_timeout": 30,
+  "lambda_memory_size": 512
+}

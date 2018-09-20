@@ -1,0 +1,5 @@
+Jinja2==2.10
+MarkupSafe==1.0
+simplejson==3.16.0
+six==1.11.0
+SQLAlchemy==1.2.12
