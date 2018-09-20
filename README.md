@@ -24,7 +24,7 @@ __Functions:__
 - zappa-django: Django installation with all Zappa defaults. Set to Debug=False and 512mb Lambda function memory (Zappa's default).
 - zappa-flask: Flask installation with all Zappa defaults. Using 512mb Lambda function memory (Zappa's default).
 - chalice: Basic Chalice example returning a basic HTML.
-- chalice-1.25mb: Chalice package plus (5 common Python)[functions/chalice-extras/website/requirements.txt] packages. Size 1.25MB.
+- chalice-1.25mb: Chalice package plus [5 common Python](functions/chalice-extras/website/requirements.txt) packages. Size 1.25MB.
 
 
 # Results
