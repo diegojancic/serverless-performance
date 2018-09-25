@@ -1,0 +1,17 @@
+{
+  "name": "sls-flask",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^1.32.0",
+    "serverless-python-requirements": "^4.2.4",
+    "serverless-wsgi": "^1.5.1"
+  }
+}
