@@ -7,7 +7,6 @@ plugins:
 custom:
   wsgi:
     app: app.app
-    packRequirements: false
   pythonRequirements:
     dockerizePip: non-linux
 

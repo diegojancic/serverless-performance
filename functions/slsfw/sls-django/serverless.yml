@@ -6,8 +6,7 @@ plugins:
 
 custom:
   wsgi:
-    app: app.app
-    packRequirements: false
+    app: website.wsgi.application
   pythonRequirements:
     dockerizePip: non-linux
 
@@ -24,7 +23,7 @@ provider:
 
 functions:
   app:
-    handler: website.wsgi.handler
+    handler: wsgi.handler
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
