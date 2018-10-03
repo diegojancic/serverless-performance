@@ -20,6 +20,8 @@ provider:
   runtime: python3.6
   stage: dev
   region: us-east-1
+  memorySize: 512
+  timeout: 30
 
 functions:
   app:
