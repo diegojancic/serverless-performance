@@ -5,15 +5,17 @@ import boto3
 
 
 ping_count = 400
-ping_delay_mins = 5
+ping_delay_secs = 5*60
 
 # Read args
 parser = argparse.ArgumentParser(description='Pings an URL during a few days to get information about it\'s execution times')
 parser.add_argument('functions', nargs='+', help='Name of the functions to read the info.')
+parser.add_argument('--delay', type=int, help='Delay in secs between requests.')
 
 args = parser.parse_args()
 functionNames = args.functions
 
+if args.delay is not None: ping_delay_secs = args.delay
 
 print ("Loading API Gateway information...")
 # Read API Gateway information
@@ -45,8 +47,7 @@ for i in range(1, ping_count):
 		print(time.strftime("%x %X") + f": Pinging {url}")
 		resp = urlopen(url)
 		resp.read()
-		
-	time.sleep(ping_delay_mins*60)
+
+	if ping_delay_secs>0: time.sleep(ping_delay_secs)
 
 print(f"All done! {ping_count} pings done.")
-
