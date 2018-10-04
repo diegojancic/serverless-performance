@@ -1,0 +1,3 @@
+mkdir --p vendor
+rm vendor/data.bin
+head -c <<SIZE_BYTES>> </dev/urandom >vendor/data.bin

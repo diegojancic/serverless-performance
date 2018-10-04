@@ -1,0 +1,7 @@
+.chalice/deployments/
+.chalice/venv/
+.chalice/deployed
+create-file.sh
+app.py
+.chalice/config.json
+vendor/data.bin
