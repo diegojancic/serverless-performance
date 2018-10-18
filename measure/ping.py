@@ -20,17 +20,18 @@ if args.delay is not None: ping_delay_secs = args.delay
 print ("Loading API Gateway information...")
 # Read API Gateway information
 ag = boto3.client("apigateway")
-functions = ag.get_rest_apis()
+functions = ag.get_rest_apis(limit=500)
 
 # Load all URLs
 urls = []
+
 for functionName in functionNames:
 
 	functionGateway = [x for x in functions["items"] if x["name"] == functionName]
 
 	if len(functionGateway) == 0:
 		func_list = ", ".join([x["name"] for x in functions["items"]])
-		raise Exception("Function not found. Available functions: " + func_list)
+		raise Exception(f"Function {functionName} not found. Available functions: {func_list}")
 
 	api_id = functionGateway[0]["id"]
 	stages = ag.get_stages(restApiId=api_id)
