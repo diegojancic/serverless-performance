@@ -29,7 +29,8 @@ for functionName in functionNames:
 	functionGateway = [x for x in functions["items"] if x["name"] == functionName]
 
 	if len(functionGateway) == 0:
-		raise Exception("Function not found.")
+		func_list = ", ".join([x["name"] for x in functions["items"]])
+		raise Exception("Function not found. Available functions: " + func_list)
 
 	api_id = functionGateway[0]["id"]
 	stages = ag.get_stages(restApiId=api_id)

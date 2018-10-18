@@ -1,4 +1,5 @@
 import os
+import time
 
 fileNames = ["app.py", ".chalice/config.json", "create-file.sh"]
 
@@ -22,5 +23,9 @@ for sizeMb in range(0, 50):
           file.write(filedata)
 
     # Create random file and publish
+    os.system("rm -rdf ./.chalice/deployments ./.chalice/deployed")
     os.system("sh create-file.sh")
-    os.system("chalice deploy")
+    os.system("chalice deploy --connection-timeout 100000")
+
+    #print("delaying 200 seconds")
+    #time.sleep(200)
