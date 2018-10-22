@@ -18,7 +18,13 @@ All functions are created using Chalice. Besides the default minimal package and
 
 # Results
 
-NOTE: Results are not yet statistically accurate. Not enough samples taken (check back in a few weeks).
+## Graphs
+
+![Function time cold start](by-size-cold.png)
+
+![Function time warm start](by-size-warm.png)
+
+## Raw Data
 
 ### Cold-start statistics
 
@@ -75,9 +81,6 @@ NOTE: Results are not yet statistically accurate. Not enough samples taken (chec
 | psize-48-dev |      48.02 | No    | 0.394    |  0.00463    |           100 |     0 |    22.4    | 0.3      |         5 |
 | psize-49-dev |      49.02 | No    | 5.154    | 43.7205     |           100 |     0 |    22.8    | 0.2      |         5 |
 
-![Function time cold start](by-size-cold.png)
-
-
 ### Warm-start statistics
 
 | Function     |   Size(MB) | VPC   |   D.Mean |     Var |   Billed Mean |   Var |   Mem Mean |        Var |   Samples |
@@ -132,5 +135,3 @@ NOTE: Results are not yet statistically accurate. Not enough samples taken (chec
 | psize-47-dev |      47.02 | No    |  2.45712 | 22.2924 |           100 |     0 |    22.9545 | 0.0435534  |       264 |
 | psize-48-dev |      48.02 | No    |  2.29303 | 18.643  |           100 |     0 |    22.8864 | 0.101106   |       264 |
 | psize-49-dev |      49.02 | No    |  3.02875 | 24.8964 |           100 |     0 |    23      | 0          |       264 |
-
-![Function time warm start](by-size-warm.png)
