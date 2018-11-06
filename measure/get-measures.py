@@ -13,7 +13,7 @@ parser.add_argument('functions', nargs='+', help='Name of the functions to read 
 args = parser.parse_args()
 functionNames = args.functions
 
-data_collected_headers = ["duration", "billed", "memused", "coldStart"]
+data_collected_headers = ["duration", "billed", "memused", "bootstrapRun"]
 
 cwl = boto3.client('logs')
 
@@ -89,17 +89,17 @@ def load_function(functionName):
 				continue;
 			results.group("duration")
 
-			coldStart = False
+			bootstrapRun = False
 			if first_event:
 				first_event = False
-				coldStart = True
+				bootstrapRun = True
 				functionInfo["memorySize"] = int(results.group("memsize"))
 
 			data_collected.append([
 					float(results.group("duration")),
 					int(results.group("billed")),
 					int(results.group("memused")),
-					coldStart
+					bootstrapRun
 				])
 
 	return (functionInfo, data_collected)
@@ -134,18 +134,17 @@ def get_stats(data):
 	#print(tabulate([data_row], tablefmt="pipe", headers=summary_headers))
 
 
-
 ### LOAD ALL FUNCTIONS INFO ###
 
-full_results_cold = []
+full_results_bootstrap = []
 full_results_warm = []
 for functionName in functionNames:
 	(functionInfo, data_collected) = load_function(functionName)
 
 	data_collected_warm = [x for x in data_collected if x[3] == False]
-	data_collected_cold = [x for x in data_collected if x[3] == True]
+	data_collected_bootstrap = [x for x in data_collected if x[3] == True]
 
-	full_results_cold.append(get_stats(data_collected_cold))
+	full_results_bootstrap.append(get_stats(data_collected_bootstrap))
 	full_results_warm.append(get_stats(data_collected_warm))
 
 
@@ -158,10 +157,10 @@ print (functionInfo)
 
 # SUMMARY DATA:
 
-print("COLD START RESULS")
+print("FRAMEWORK BOOTSTRAP RESULS")
 print("-----------------")
-print(tabulate(full_results_cold, tablefmt="pipe", headers=summary_headers))
-#output_stats(data_collected_cold)
+print(tabulate(full_results_bootstrap, tablefmt="pipe", headers=summary_headers))
+#output_stats(data_collected_bootstrap)
 
 print("WARM START RESULS")
 print("-----------------")

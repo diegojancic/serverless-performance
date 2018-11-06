@@ -1,0 +1,56 @@
+{
+    "Duration": 0.579,
+    "Id": "1-5be20de0-1064ff40b8fbc8d0e2e1b708",
+    "Segments": [
+        {
+            "Document": {
+                "id": "68e460e604454577",
+                "name": "psize-35-dev",
+                "start_time": 1541541345.583,
+                "end_time": 1541541345.583,
+                "parent_id": "3c22e851133c0ad5",
+                "aws": {
+                    "function_arn": "arn:aws:lambda:us-east-1:532855750287:function:psize-35-dev",
+                    "resource_names": [
+                        "psize-35-dev"
+                    ],
+                    "account_id": "532855750287"
+                },
+                "trace_id": "1-5be20de0-1064ff40b8fbc8d0e2e1b708",
+                "origin": "AWS::Lambda::Function",
+                "subsegments": [
+                    {
+                        "id": "2bebd69c34ea6c6a",
+                        "name": "Initialization",
+                        "start_time": 1541541345.567,
+                        "end_time": 1541541345.579,
+                        "aws": {
+                            "function_arn": "arn:aws:lambda:us-east-1:532855750287:function:psize-35-dev"
+                        }
+                    }
+                ]
+            },
+            "Id": "68e460e604454577"
+        },
+        {
+            "Document": {
+                "id": "3c22e851133c0ad5",
+                "name": "psize-35-dev",
+                "start_time": 1541541345.006,
+                "end_time": 1541541345.585,
+                "http": {
+                    "response": {
+                        "status": 200
+                    }
+                },
+                "aws": {
+                    "request_id": "b6411cf7-e20e-11e8-89b7-eb5e2643317c"
+                },
+                "trace_id": "1-5be20de0-1064ff40b8fbc8d0e2e1b708",
+                "origin": "AWS::Lambda",
+                "resource_arn": "arn:aws:lambda:us-east-1:532855750287:function:psize-35-dev"
+            },
+            "Id": "3c22e851133c0ad5"
+        }
+    ]
+}
