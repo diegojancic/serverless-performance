@@ -1,17 +1,8 @@
 import boto3
-import argparse
 import json
 from datetime import datetime
 from datetime import timedelta
 from tabulate import tabulate
-
-# Read args
-parser = argparse.ArgumentParser(description='Reads CloudWatch Logs and parses execution durations and more.')
-parser.add_argument('functions', nargs='+', help='Name of the functions to read the info.')
-
-args = parser.parse_args()
-functionNames = args.functions
-
 
 # Load XRay traces
 xray = boto3.client("xray")
@@ -43,17 +34,31 @@ for trace in traces:
     # Find the segment in the trace that has the function
     # execution time
     functionSegment = None
+    lambdaSegment = None
     for seg in segments:
-        functionSegment = json.loads(seg["Document"])
-        if functionSegment["origin"] == "AWS::Lambda::Function":
-            break
+        sd = json.loads(seg["Document"])
+        if sd["origin"] == "AWS::Lambda::Function":
+            functionSegment = sd
+        elif sd["origin"] == "AWS::Lambda":
+            lambdaSegment = sd
 
-    function_name = functionSegment["name"]
-    function_time = functionSegment["end_time"] - functionSegment["start_time"]
-    results.append([function_name, duration*1000, round(function_time*1000)])
+    functionName = ""
+    functionTime = ""
+    coldStartTime = ""
+
+    if functionSegment:
+        functionName = functionSegment["name"]
+        functionTime = functionSegment["end_time"] - functionSegment["start_time"]
+        coldStartTime = functionSegment["start_time"] - lambdaSegment["start_time"]
+
+        functionTime = round(functionTime*1000)
+        coldStartTime = round(coldStartTime*1000)
+    else:
+        functionName = lambdaSegment["name"]
+    results.append([functionName, duration*1000, functionTime, coldStartTime])
 
 
-headers = ["Function", "TotalTime (ms)", "FuncTime (ms)"]
+headers = ["Function", "TotalTime (ms)", "FuncTime (ms)", "ColdStart (ms)"]
 
 print("RESULS")
 print("-----------------")
