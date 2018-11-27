@@ -1,0 +1,50 @@
+{
+    "dev": {
+        "app_function": "app.app",
+        "aws_region": "us-east-1",
+        "profile_name": "default",
+        "project_name": "zappa-global",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-dwm1tkoyo"
+    },
+    "dev_ap_northeast_1": {
+        "aws_region": "ap-northeast-1",
+        "s3_bucket": "zappa-dwm1tkoyo2",
+        "extends": "dev"
+    },
+    "dev_ap_south_1": {
+        "aws_region": "ap-south-1",
+        "s3_bucket": "zappa-dwm1tkoyo3",
+        "extends": "dev"
+    },
+    "dev_ap_southeast_1": {
+        "aws_region": "ap-southeast-1",
+        "s3_bucket": "zappa-dwm1tkoyo4",
+        "extends": "dev"
+    },
+    "dev_ca_central_1": {
+        "aws_region": "ca-central-1",
+        "s3_bucket": "zappa-dwm1tkoyo5",
+        "extends": "dev"
+    },
+    "dev_eu_central_1": {
+        "aws_region": "eu-central-1",
+        "s3_bucket": "zappa-dwm1tkoyo8",
+        "extends": "dev"
+    },
+    "dev_eu_west_1": {
+        "aws_region": "eu-west-1",
+        "s3_bucket": "zappa-dwm1tkoyo9",
+        "extends": "dev"
+    },
+    "dev_sa_east_1": {
+        "aws_region": "sa-east-1",
+        "s3_bucket": "zappa-dwm1tkoyo10",
+        "extends": "dev"
+    },
+    "dev_us_west_1": {
+        "aws_region": "us-west-1",
+        "s3_bucket": "zappa-dwm1tkoyo11",
+        "extends": "dev"
+    }
+}
