@@ -13,6 +13,11 @@ Feel free to add more tests in different languages or using other frameworks.
 - [Performance Results by Function Size](results/by-size.md)
 
 
+# Further read
+
+- [API Gateway & Lambda & VPC performance](https://www.robertvojta.com/aws-journey-api-gateway-lambda-vpc-performance/)
+
+
 # License
 
 Initially created by Diego Jancic. MIT License.
