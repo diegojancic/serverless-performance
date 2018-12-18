@@ -3,9 +3,11 @@
 Sample size: ~330 requests
 
 __EC2 instance HTTP request time:__ 1ms average
+
 (No HTTPS)
 
 __EC2 instance HTTP + CloudFront HTTPS:__ 7ms average (min: 64ms, max: 21ms, std dev: 1ms)
+
 (Same results with HTTP or HTTPS)
 
 __Lambda+APIG HTTPS request time:__
