@@ -11,6 +11,7 @@ Feel free to add more tests in different languages or using other frameworks.
 
 - [Performance Results by Framework](results/by-framework.md)
 - [Performance Results by Function Size](results/by-size.md)
+- [Integration Latency](results/integration-latency.md)
 
 
 # Further read
