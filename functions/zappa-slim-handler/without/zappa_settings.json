@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "app_function": "app.app",
+        "aws_region": "us-east-1",
+        "profile_name": "default",
+        "project_name": "zappa-noslim",
+        "runtime": "python3.6",
+        "s3_bucket": "zappa-uz6277ve9"
+    }
+}
